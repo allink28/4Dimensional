@@ -73,15 +73,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >   
 	        <TextView
+	                android:id="@+id/endLabel"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/end" 
+	                android:textSize="20sp"/>
+	        
+			<EditText
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="" />	        
+	    </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >            
+            
+            <EditText
+                android:id="@+id/endLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/defaultPosition" />
+
+            <EditText
+                android:id="@+id/endLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/defaultPosition" />
+            
+            <EditText
+                android:id="@+id/endAlt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/altitude"
+                android:text="@string/defaultPosition" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >   
+	        <TextView
 	                android:id="@+id/currentLabel"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:text="@string/current" 
 	                android:textSize="20sp"/>
-	    </TableRow>
+	    </TableRow>        
         
         <TableRow
-            android:id="@+id/tableRow2"
+            android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >            
             
