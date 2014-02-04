@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start"
+                android:textSize="20sp" />
+            
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="" />
+            
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >            
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/latitude"
+                android:text="@string/defaultPosition" />
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/longitude"                
+                android:text="@string/defaultPosition" />
+            
+            <EditText
+                android:id="@+id/startAlt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/altitude"
+                android:text="@string/defaultPosition" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >   
+	        <TextView
+	                android:id="@+id/currentLabel"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/current" 
+	                android:textSize="20sp"/>
+	    </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >            
+            
+            <EditText
+                android:id="@+id/currentLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/defaultPosition" />
+
+            <EditText
+                android:id="@+id/currentLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/defaultPosition" />
+            
+            <EditText
+                android:id="@+id/currentAlt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/altitude"
+                android:text="@string/defaultPosition" />
+
+        </TableRow>
+
+    </TableLayout>
+    
+    <LinearLayout
+        android:id="@+id/fullscreen_content_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tableLayout1"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent" >
+
+	    <Button
+	        android:id="@+id/start_button"
+	        
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:onClick="startTimer"
+	        android:text="Start" />
+	
+	    <Button
+	        android:id="@+id/end_button"
+	        
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="58dp"
+	        android:layout_weight="1"
+	        android:onClick="stopTimer"
+	        android:text="End" />
+	</LinearLayout>
+</RelativeLayout>
