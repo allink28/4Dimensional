@@ -4,9 +4,12 @@
     <string name="app_name">4 Dimensional</string>
     <string name="action_settings">Settings</string>
     
-    <string name="start">Start:</string>
+    <string name="start">Start:</string>    
     <string name="current">Current:</string>
     <string name="end">End:</string>
+    <string name="startLabel">Start</string>
+    <string name="markLabel">Mark</string>
+
     
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>

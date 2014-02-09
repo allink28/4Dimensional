@@ -40,7 +40,7 @@
             android:layout_height="wrap_content" >            
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/startLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -49,7 +49,7 @@
                 android:text="@string/defaultPosition" />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/startLongitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -123,6 +123,20 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >   
+	        
+	        <TextView
+	                android:id="@+id/summary"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="" 
+	                android:textSize="20sp"/>
+            
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >   
 	        <TextView
 	                android:id="@+id/currentLabel"
 	                android:layout_width="wrap_content"
@@ -132,7 +146,7 @@
 	    </TableRow>        
         
         <TableRow
-            android:id="@+id/tableRow5"
+            android:id="@+id/tableRow6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >            
             
@@ -180,17 +194,17 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:onClick="startTimer"
-	        android:text="Start" />
+	        android:onClick="toggleTimer"
+	        android:text="@string/startLabel" />
 	
 	    <Button
-	        android:id="@+id/end_button"
+	        android:id="@+id/mark_button"
 	        
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="58dp"
 	        android:layout_weight="1"
-	        android:onClick="stopTimer"
-	        android:text="End" />
+	        android:onClick="mark"
+	        android:text="@string/markLabel" />
 	</LinearLayout>
 </RelativeLayout>

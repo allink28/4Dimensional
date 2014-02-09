@@ -3,6 +3,8 @@ package com.github.allink28.android_gps_buildexample;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import android.location.LocationManager;
+
 public class Marker implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class Marker implements Serializable {
     longitude = lon;
     altitude = alt;
   }
-
+  
   public Calendar getTime() {
     return time;
   }
