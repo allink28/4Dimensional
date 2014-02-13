@@ -9,7 +9,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -17,8 +22,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements LocationListener{
-  SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a EEE, MMM d");      
+public class MainActivity extends Activity implements LocationListener {
+  public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("h:mm a EEE, MMM d");      
   EditText startTimeTB;
   EditText startLatTB, startLongTB;
   EditText currentLat, currentLong, currentAlt;
@@ -27,6 +32,11 @@ public class MainActivity extends Activity implements LocationListener{
   private static String START = "Start", STOP = "Stop";
   LocationManager locationManager;
   Location currentLocation;
+  
+  Intent intent;
+  PendingIntent pendingIntent;
+  NotificationManager notificationManager;
+  private static int NOTIFICATION_ID = 0;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +49,13 @@ public class MainActivity extends Activity implements LocationListener{
     currentLong = (EditText) this.findViewById(R.id.currentLong);
     currentAlt = (EditText) this.findViewById(R.id.currentAlt);
     
+    intent = new Intent(getApplicationContext(), MainActivity.class);
+    pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    
     start = (Button) this.findViewById(R.id.start_button);
     locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-    locationManager.requestLocationUpdates("gps", 1000 * 2, 1, this); //update after 1000ms of a move of 1m
+    locationManager.requestLocationUpdates("gps", 1000 * 3, 1, this); //update after 1000ms of a move of 1m
   }
 
   @Override
@@ -59,34 +73,47 @@ public class MainActivity extends Activity implements LocationListener{
         ", speed: "+location.getSpeed());    
 //    location.distanceTo(dest)
 //  Date d = new Date(location.getTime());
-    currentLat.setText(String.valueOf(location.getLatitude()));
-    currentLong.setText(String.valueOf(location.getLongitude()));
-    currentAlt.setText(String.valueOf(location.getAltitude()));    
+    currentLat.setText(formatCoordinates(location.getLatitude()));
+    currentLong.setText(formatCoordinates(location.getLongitude()));
+    currentAlt.setText(String.valueOf( Math.round(location.getAltitude())) );    
   }
   
   public void toggleTimer(View v){
     if (startTime==0){
       startTimer(v);
-      start.setText(START);
+      start.setText(STOP);      
     } else {
       stopTimer(v);
-      start.setText(STOP);
+      start.setText(START);
       startTime = 0;
     }
-  }
-  
-  public void setStartView(Marker m){
-    
   }
   
   public void startTimer(View v) {
     startTime = System.currentTimeMillis();
     Date d = new Date(startTime);
-    startTimeTB.setText(dateFormat.format(d));
-//    TextView myTextView = (TextView) this.findViewById(R.id.fullscreen_content);
-//    myTextView.setText("Started on\n"+Calendar.getInstance().getTime());
-//    Button b = (Button) this.findViewById(R.id.start_button);
-//    b.setText("Restart");
+    String formattedDate =DATE_FORMAT.format(d); 
+    startTimeTB.setText(formattedDate);
+    setNotification(formattedDate);
+  }
+  
+  @SuppressWarnings("deprecation")
+  public void setNotification(String startDate){
+    Notification notification = new Notification();
+    notification.icon = R.drawable.ic_launcher;
+    notification.tickerText = "Timer running. Started at: "+startDate;
+    notification.number = 0;
+    notification.setLatestEventInfo(getApplicationContext(), //api 14 compatible
+        "4Dimensional - Timer running", 
+        "Started at: "+startDate, 
+        pendingIntent);    
+//    Notification noti = new Notification.Builder(getApplicationContext()) //for api 16
+//          .setContentTitle("Content title")
+//          .setContentText("content text") //setSmallIcon(R.drawable.new_email).setLargeIcon(aBitmap)
+//          .setContentIntent(pendingIntent)
+//          .build();
+    notificationManager.notify(
+        NOTIFICATION_ID, notification);    
   }
   
   
@@ -95,10 +122,11 @@ public class MainActivity extends Activity implements LocationListener{
     endTime = System.currentTimeMillis();
     long elapsedTime = endTime - startTime;
     Log.i("stopTimer", "elapsedTime: "+elapsedTime +" ms");
-//    TextView myTextView = (TextView) this.findViewById(R.id.fullscreen_content);
-//    myTextView.setText("Elapsed Time: "+elapsedTime/1000.0 +"s");    
-//    Button b = (Button) this.findViewById(R.id.start_button);
-//    b.setText("Start");
+    notificationManager.cancel(NOTIFICATION_ID);
+  }
+  
+  private String formatCoordinates(double coordinate){
+    return String.valueOf( ((int)(coordinate*100000))/100000.0);
   }
   
   public void mark(View v){
