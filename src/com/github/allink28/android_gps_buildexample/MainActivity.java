@@ -155,6 +155,7 @@ public class MainActivity extends Activity implements LocationListener {
   }
   private void clearLocationDisplay(){    
     String emptyString = "";
+    summaryTV.setText(emptyString);
     endTimeTB.setText(emptyString);
     endLatTB.setText(emptyString);
     endLongTB.setText(emptyString);
