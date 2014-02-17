@@ -99,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/latitude"
                 android:text="@string/defaultPosition" />
 
             <EditText
@@ -107,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="@string/longitude"
                 android:text="@string/defaultPosition" />
             
             <EditText
