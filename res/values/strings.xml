@@ -3,6 +3,7 @@
 
     <string name="app_name">4 Dimensional</string>
     <string name="action_settings">Settings</string>
+    <color name="blue">#FF30c0ff</color><!-- FF30c0ff -->
     
     <string name="start">Start:</string>    
     <string name="current">Current:</string>
@@ -14,6 +15,5 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="altitude">Altitude</string>
-    <string name="defaultPosition">0</string>
 
 </resources>

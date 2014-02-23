@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/blue"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -40,7 +41,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/latitude"
-                android:text="@string/defaultPosition" />
+				 />
 
             <EditText
                 android:id="@+id/startLongitude"
@@ -49,7 +50,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/longitude"                
-                android:text="@string/defaultPosition" />
+				 />
             
             <EditText
                 android:id="@+id/startAlt"
@@ -58,7 +59,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/altitude"
-                android:text="@string/defaultPosition" />
+				 />
 	</LinearLayout>
 
     <LinearLayout
@@ -92,7 +93,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/latitude"
-                android:text="@string/defaultPosition" />
+				 />
 
             <EditText
                 android:id="@+id/endLong"
@@ -101,7 +102,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/longitude"
-                android:text="@string/defaultPosition" />
+				 />
             
             <EditText
                 android:id="@+id/endAlt"
@@ -109,8 +110,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:hint="@string/altitude"
-                android:text="@string/defaultPosition" />
+                android:hint="@string/altitude" />
     </LinearLayout>
     
     <LinearLayout
@@ -153,8 +153,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-				android:hint="@string/latitude"
-                android:text="@string/defaultPosition" />
+				android:hint="@string/latitude" />
 
             <EditText
                 android:id="@+id/currentLong"
@@ -162,8 +161,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:hint="@string/longitude"                
-                android:text="@string/defaultPosition" />
+                android:hint="@string/longitude" />
             
             <EditText
                 android:id="@+id/currentAlt"
@@ -171,8 +169,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:hint="@string/altitude"
-                android:text="@string/defaultPosition" />
+                android:hint="@string/altitude" />
 
     </LinearLayout>
 

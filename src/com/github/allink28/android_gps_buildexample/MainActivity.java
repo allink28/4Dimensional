@@ -2,7 +2,6 @@ package com.github.allink28.android_gps_buildexample;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.location.Location;
@@ -14,7 +13,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -75,10 +73,10 @@ public class MainActivity extends Activity implements LocationListener {
   @Override
   public void onLocationChanged(Location location) {
     currentLocation = location;
-    Log.i("locationChanged:gps build example", "Latitude: "+ location.getLatitude() 
-        +", Longitude: "+ location.getLongitude() + ", Altitude: "+ location.getAltitude()+
-        ", speed: "+location.getSpeed());    
-//    location.distanceTo(dest)
+//    Log.i("locationChanged:gps build example", "Latitude: "+ location.getLatitude() 
+//        +", Longitude: "+ location.getLongitude() + ", Altitude: "+ location.getAltitude()+
+//        ", speed: "+location.getSpeed());    
+//    location.distanceTo(dest) //sum distances to get total distance instead of displacement
 //  Date d = new Date(location.getTime());
     setLocationDisplay(currentLocation, currentLat, currentLong, currentAlt);
   }
@@ -110,14 +108,18 @@ public class MainActivity extends Activity implements LocationListener {
     long elapsedTime = endTime - startTime;    
     endTimeTB.setText(DATE_FORMAT.format(new Date(endTime)));
     endLocation = currentLocation;
+    notificationManager.cancel(NOTIFICATION_ID);
     setLocationDisplay(endLocation, endLatTB, endLongTB, endAltTB);
+    setLocationDisplay(startLocation, startLatTB, startLongTB, startAltTB);
     int seconds = (int) (elapsedTime/1000);
     int minutes = seconds/60;
     seconds = seconds%60;
     final DecimalFormat timeFormat = new DecimalFormat("*0##");
-//    summaryTV.setText("Time: "+minutes/60 +":"+minutes%60+":"+seconds);
-    summaryTV.setText("Time: "+minutes/60 +":"+timeFormat.format(minutes%60)+":"+timeFormat.format(seconds));
-    notificationManager.cancel(NOTIFICATION_ID);
+    StringBuilder sb = new StringBuilder("Time: "+minutes/60 +":"+timeFormat.format(minutes%60)+":"+timeFormat.format(seconds));
+    if (startLocation != null && endLocation != null){
+      sb.append(formatDistance(startLocation.distanceTo(endLocation)));
+    }
+    summaryTV.setText(sb.toString());    
   }
   
   @SuppressWarnings("deprecation")
@@ -138,8 +140,7 @@ public class MainActivity extends Activity implements LocationListener {
 //          .setContentText("content text") //setSmallIcon(R.drawable.new_email).setLargeIcon(aBitmap)
 //          .setContentIntent(pendingIntent)
 //          .build();
-    notificationManager.notify(
-        NOTIFICATION_ID, notification);    
+    notificationManager.notify(NOTIFICATION_ID, notification);    
   }
   
   public void mark(View v){
@@ -161,7 +162,12 @@ public class MainActivity extends Activity implements LocationListener {
     endLongTB.setText(emptyString);
     endAltTB.setText(emptyString);
   }
-  
+  private String formatDistance(float distance){
+    if (distance > 1000){
+      return "\nDisplacement: "+Math.round(distance/1000)+" km";
+    }
+    return "\nDisplacement: ~"+Math.round(distance)+" m";
+  }
 
   @Override
   public void onProviderDisabled(String provider) {
