@@ -30,6 +30,7 @@ public class MainActivity extends Activity implements LocationListener {
   TextView summaryTV;
   Button start, mark;
   private long startTime = 0, endTime = 0;
+  float distance;
   private static String START = "Start", STOP = "Stop";
   LocationManager locationManager;
   Location currentLocation, startLocation, endLocation;
@@ -43,7 +44,7 @@ public class MainActivity extends Activity implements LocationListener {
     setContentView(R.layout.activity_main);
     init();
     locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-    locationManager.requestLocationUpdates("gps", 1000 * 2, 1, this); //update after 1000ms of a move of 1m
+    locationManager.requestLocationUpdates("gps", 1000 * 3, 1, this); //update after 1000ms or a move of 1m
   }
   
   private void init(){
@@ -71,8 +72,12 @@ public class MainActivity extends Activity implements LocationListener {
   }
 
   @Override
-  public void onLocationChanged(Location location) {
-    currentLocation = location;
+  public void onLocationChanged(Location newLocation) {
+    if (newLocation != null && currentLocation != null && endTime == 0){
+      distance += newLocation.distanceTo(currentLocation);
+      summaryTV.setText("Distance traveled: "+formatDistance(distance));    
+    }
+    currentLocation = newLocation;
 //    Log.i("locationChanged:gps build example", "Latitude: "+ location.getLatitude() 
 //        +", Longitude: "+ location.getLongitude() + ", Altitude: "+ location.getAltitude()+
 //        ", speed: "+location.getSpeed());    
@@ -84,7 +89,9 @@ public class MainActivity extends Activity implements LocationListener {
   public void toggleTimer(View v){
     if (startTime==0){
       startTimer(v);
-      start.setText(STOP);      
+      start.setText(STOP);
+      endTime = 0;
+      distance = 0;
     } else {
       stopTimer(v);
       start.setText(START);
@@ -114,10 +121,14 @@ public class MainActivity extends Activity implements LocationListener {
     int seconds = (int) (elapsedTime/1000);
     int minutes = seconds/60;
     seconds = seconds%60;
-    final DecimalFormat timeFormat = new DecimalFormat("*0##");
-    StringBuilder sb = new StringBuilder("Time: "+minutes/60 +":"+timeFormat.format(minutes%60)+":"+timeFormat.format(seconds));
+    final DecimalFormat timeFormat = new DecimalFormat("*0##");    
+    StringBuilder sb = new StringBuilder();
+    if (distance != 0){
+      sb.append("Distance traveled: "+formatDistance(distance)+"\n");    
+    }
+    sb.append("Time: "+minutes/60 +":"+timeFormat.format(minutes%60)+":"+timeFormat.format(seconds));
     if (startLocation != null && endLocation != null){
-      sb.append(formatDistance(startLocation.distanceTo(endLocation)));
+      sb.append("\nDisplacement: "+formatDistance(startLocation.distanceTo(endLocation)));
     }
     summaryTV.setText(sb.toString());    
   }
@@ -164,9 +175,9 @@ public class MainActivity extends Activity implements LocationListener {
   }
   private String formatDistance(float distance){
     if (distance > 1000){
-      return "\nDisplacement: "+Math.round(distance/1000)+" km";
+      return Math.round(distance/1000)+" km";
     }
-    return "\nDisplacement: ~"+Math.round(distance)+" m";
+    return "~"+Math.round(distance)+" m";
   }
 
   @Override

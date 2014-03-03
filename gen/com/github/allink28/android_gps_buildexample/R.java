@@ -65,6 +65,8 @@ public final class R {
         public static final int latitude=0x7f050007;
         public static final int longitude=0x7f050008;
         public static final int markLabel=0x7f050006;
+        /**  FF30c0ff 
+         */
         public static final int start=0x7f050002;
         public static final int startLabel=0x7f050005;
     }
