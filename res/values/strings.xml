@@ -5,10 +5,11 @@
     <string name="action_settings">Settings</string>
     <color name="blue">#FF30c0ff</color><!-- FF30c0ff -->
     
-    <string name="start">Start:</string>    
+    <string name="startLabel">Start: </string>    
     <string name="current">Current:</string>
-    <string name="end">End:</string>
-    <string name="startLabel">Start</string>
+    <string name="end">End: </string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
     <string name="markLabel">Mark</string>
 
     

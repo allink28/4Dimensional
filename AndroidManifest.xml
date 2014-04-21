@@ -25,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+          	android:name="com.github.allink28.android_gps_buildexample.SettingsActivity"
+            android:label="@string/action_settings">
+            
+        </activity>
     </application>
 
 </manifest>

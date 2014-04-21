@@ -16,22 +16,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity implements LocationListener {
   public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("h:mm a EEE, MMM d");      
   EditText startTimeTB, endTimeTB;
-  EditText startLatTB, startLongTB, startAltTB;
-  EditText currentLat, currentLong, currentAlt;
-  EditText endLatTB, endLongTB, endAltTB;
+  EditText startLatTB, startLongTB;
+  EditText currentLat, currentLong;
+  EditText endLatTB, endLongTB;
   TextView summaryTV;
-  Button start, mark;
+  ToggleButton start;
+  Button mark;
   private long startTime = 0, endTime = 0;
   float distance;
-  private static String START = "Start", STOP = "Stop";
   LocationManager locationManager;
   Location currentLocation, startLocation, endLocation;
   
@@ -43,24 +45,21 @@ public class MainActivity extends Activity implements LocationListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     init();
-    locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-    locationManager.requestLocationUpdates("gps", 1000 * 3, 1, this); //update after 1000ms or a move of 1m
+    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    locationManager.requestLocationUpdates("gps", 1000 * 5, 3, this); //update after 1000ms or a move of 3m
   }
   
   private void init(){
     startTimeTB = (EditText) this.findViewById(R.id.startTime);
     startLatTB = (EditText) this.findViewById(R.id.startLatitude);
     startLongTB = (EditText) this.findViewById(R.id.startLongitude);  
-    startAltTB = (EditText) this.findViewById(R.id.startAlt);
     currentLat = (EditText) this.findViewById(R.id.currentLat);
     currentLong = (EditText) this.findViewById(R.id.currentLong);
-    currentAlt = (EditText) this.findViewById(R.id.currentAlt);
     endTimeTB = (EditText) this.findViewById(R.id.endTime);
     endLatTB = (EditText) this.findViewById(R.id.endLat);
     endLongTB = (EditText) this.findViewById(R.id.endLong);
-    endAltTB = (EditText) this.findViewById(R.id.endAlt);   
     summaryTV = (TextView) this.findViewById(R.id.summary);
-    start = (Button) this.findViewById(R.id.start_button);
+    start = (ToggleButton) this.findViewById(R.id.start_button);
     notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
   }
 
@@ -70,54 +69,56 @@ public class MainActivity extends Activity implements LocationListener {
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
   }
+  public boolean onOptionsItemSelected(MenuItem item){
+    switch (item.getItemId()) {
+    case R.id.action_settings:
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 
   @Override
   public void onLocationChanged(Location newLocation) {
-    if (newLocation != null && currentLocation != null && endTime == 0){
+    if (start.isChecked() && newLocation != null && currentLocation != null){
       distance += newLocation.distanceTo(currentLocation);
       summaryTV.setText("Distance traveled: "+formatDistance(distance));    
     }
     currentLocation = newLocation;
-//    Log.i("locationChanged:gps build example", "Latitude: "+ location.getLatitude() 
-//        +", Longitude: "+ location.getLongitude() + ", Altitude: "+ location.getAltitude()+
-//        ", speed: "+location.getSpeed());    
-//    location.distanceTo(dest) //sum distances to get total distance instead of displacement
-//  Date d = new Date(location.getTime());
-    setLocationDisplay(currentLocation, currentLat, currentLong, currentAlt);
+    setLocationDisplay(currentLocation, currentLat, currentLong);
   }
   
   public void toggleTimer(View v){
-    if (startTime==0){
+    if (start.isChecked()){
       startTimer(v);
-      start.setText(STOP);
       endTime = 0;
       distance = 0;
     } else {
       stopTimer(v);
-      start.setText(START);
       startTime = 0;
     }
   }
   
-  public void startTimer(View v) {
+  private void startTimer(View v) {
     startLocation = currentLocation;
     startTime = System.currentTimeMillis();
     Date d = new Date(startTime);
     String formattedDate = DATE_FORMAT.format(d); 
     startTimeTB.setText(formattedDate);
-    setLocationDisplay(startLocation, startLatTB, startLongTB, startAltTB);
+    setLocationDisplay(startLocation, startLatTB, startLongTB);
     clearLocationDisplay();
     setNotification(formattedDate);
   }
   
-  public void stopTimer(View v) {    
+  private void stopTimer(View v) {    
     endTime = System.currentTimeMillis();        
     long elapsedTime = endTime - startTime;    
     endTimeTB.setText(DATE_FORMAT.format(new Date(endTime)));
     endLocation = currentLocation;
     notificationManager.cancel(NOTIFICATION_ID);
-    setLocationDisplay(endLocation, endLatTB, endLongTB, endAltTB);
-    setLocationDisplay(startLocation, startLatTB, startLongTB, startAltTB);
+    setLocationDisplay(endLocation, endLatTB, endLongTB);
+    setLocationDisplay(startLocation, startLatTB, startLongTB);
     int seconds = (int) (elapsedTime/1000);
     int minutes = seconds/60;
     seconds = seconds%60;
@@ -158,11 +159,10 @@ public class MainActivity extends Activity implements LocationListener {
     
   }
   
-  private void setLocationDisplay(Location l, EditText lat, EditText lon, EditText alt){
+  private void setLocationDisplay(Location l, EditText lat, EditText lon){
     if (l != null) {
       lat.setText(String.valueOf( ((int)(l.getLatitude()*100000))/100000.0));
       lon.setText(String.valueOf( ((int)(l.getLongitude()*100000))/100000.0));
-      alt.setText(String.valueOf( Math.round(l.getAltitude())));
     }
   }
   private void clearLocationDisplay(){    
@@ -171,7 +171,6 @@ public class MainActivity extends Activity implements LocationListener {
     endTimeTB.setText(emptyString);
     endLatTB.setText(emptyString);
     endLongTB.setText(emptyString);
-    endAltTB.setText(emptyString);
   }
   private String formatDistance(float distance){
     if (distance > 1000){
