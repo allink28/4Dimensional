@@ -173,10 +173,13 @@ public class MainActivity extends Activity implements LocationListener {
     endLongTB.setText(emptyString);
   }
   private String formatDistance(float distance){
-    if (distance > 1000){
-      return Math.round(distance/1000)+" km";
+    if (distance < 1000){
+      return "~"+Math.round(distance)+" m";
     }
-    return "~"+Math.round(distance)+" m";
+    if (distance < 100000){
+      return Math.round(distance/100)/10.0+" km";
+    }
+    return Math.round(distance/1000)+" km";    
   }
 
   @Override

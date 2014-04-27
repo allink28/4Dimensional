@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="pref_sync"
-        android:title="title"
-        android:summary="summary"
-        android:defaultValue="true" />
-    <PreferenceCategory
-            android:title="PreferenceCategory EditTextPreference">
+    
+    <PreferenceCategory 
+        android:title="GPS Settings">
+        
         <EditTextPreference
-                android:key="PREF_EDITTEXT"
-                android:title="EditText title"
-                android:summary="EditText summary"
-                android:dialogTitle="EditText Dialog" />
+                android:key="UPDATE_DISTANCE"
+                android:title="GPS Update Distance"
+                android:summary="Lower means more battery usage, but more updates while moving"
+                android:dialogTitle="Distance (meters) until GPS update."
+                android:defaultValue="3" />
+        
+        <EditTextPreference
+                android:key="UPDATE_TIME"
+                android:title="GPS Update Time"
+                android:summary="Lower means more battery usage, but more frequent updates"
+                android:dialogTitle="Seconds until GPS update."
+                android:defaultValue="5" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+            android:title="PreferenceCategory">
+        <CheckBoxPreference
+		       android:key="pref_sync"
+		       android:title="Title"
+		       android:summary="summary"
+		       android:defaultValue="true" />
     </PreferenceCategory>
     <!--  ListPreference
         android:dependency="pref_sync"
