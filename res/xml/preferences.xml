@@ -5,14 +5,14 @@
         android:title="GPS Settings">
         
         <EditTextPreference
-                android:key="UPDATE_DISTANCE"
+                android:key="update_dist"
                 android:title="GPS Update Distance"
                 android:summary="Lower means more battery usage, but more updates while moving"
                 android:dialogTitle="Distance (meters) until GPS update."
                 android:defaultValue="3" />
         
         <EditTextPreference
-                android:key="UPDATE_TIME"
+                android:key="update_time"
                 android:title="GPS Update Time"
                 android:summary="Lower means more battery usage, but more frequent updates"
                 android:dialogTitle="Seconds until GPS update."
@@ -24,9 +24,9 @@
             android:title="PreferenceCategory">
         <CheckBoxPreference
 		       android:key="pref_sync"
-		       android:title="Title"
-		       android:summary="summary"
-		       android:defaultValue="true" />
+		       android:title="Placebo Effect"
+		       android:summary="Turn on for faster performance and less battery usage"
+		       android:defaultValue="false" />
     </PreferenceCategory>
     <!--  ListPreference
         android:dependency="pref_sync"
