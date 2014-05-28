@@ -16,5 +16,8 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="altitude">Altitude</string>
+    
+    <string name="update_time">update_time</string>
+    <string name="update_dist">update_dist</string>   
 
 </resources>

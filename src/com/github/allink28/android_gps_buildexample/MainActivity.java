@@ -62,10 +62,12 @@ public class MainActivity extends Activity implements LocationListener {
     endLongTB = (EditText) this.findViewById(R.id.endLong);
     summaryTV = (TextView) this.findViewById(R.id.summary);
     start = (ToggleButton) this.findViewById(R.id.start_button);
+    
     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    locationManager.requestLocationUpdates("gps", 
-        1000 * settings.getInt("update_time", 5), //ms to update after 
-        settings.getInt("update_dist", 3), this); //meters to update after
+    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER ,
+        1000 * Integer.valueOf(settings.getString(getString(R.string.update_time), "5")),//ms to update after 
+        Integer.valueOf(settings.getString(getString(R.string.update_dist), "3")),//meters to update after
+        this); 
     
     notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
   }

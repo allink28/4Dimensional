@@ -5,18 +5,18 @@
         android:title="GPS Settings">
         
         <EditTextPreference
-                android:key="update_dist"
-                android:title="GPS Update Distance"
-                android:summary="Lower means more battery usage, but more updates while moving"
-                android:dialogTitle="Distance (meters) until GPS update."
-                android:defaultValue="3" />
-        
-        <EditTextPreference
-                android:key="update_time"
+                android:key="@string/update_time"
                 android:title="GPS Update Time"
                 android:summary="Lower means more battery usage, but more frequent updates"
                 android:dialogTitle="Seconds until GPS update."
                 android:defaultValue="5" />
+        
+        <EditTextPreference
+                android:key="@string/update_dist"
+                android:title="GPS Update Distance"
+                android:summary="Lower means more battery usage, but more updates while moving"
+                android:dialogTitle="Distance (meters) until GPS update."
+                android:defaultValue="3" />        
         
     </PreferenceCategory>
     
