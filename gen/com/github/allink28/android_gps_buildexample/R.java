@@ -71,6 +71,7 @@ public final class R {
         public static final int stop=0x7f060006;
         public static final int update_dist=0x7f06000c;
         public static final int update_time=0x7f06000b;
+        public static final int useDMS=0x7f06000d;
     }
     public static final class style {
         /** 

@@ -178,8 +178,9 @@ public class MainActivity extends Activity implements LocationListener {
   
   private void setLocationDisplay(Location l, EditText lat, EditText lon){
     if (l != null) {
-      lat.setText(String.valueOf( ((int)(l.getLatitude()*100000))/100000.0));
-      lon.setText(String.valueOf( ((int)(l.getLongitude()*100000))/100000.0));
+      boolean useDMS = settings.getBoolean(getString(R.string.useDMS), false);
+      lat.setText(String.valueOf(Converter.formatCoordinate(l.getLatitude() , useDMS)));
+      lon.setText(String.valueOf(Converter.formatCoordinate(l.getLongitude(), useDMS)));
     } else {
       lat.setText(null);
       lon.setText(null);
@@ -206,7 +207,7 @@ public class MainActivity extends Activity implements LocationListener {
   @Override
   public void onProviderEnabled(String provider) {
     // TODO Auto-generated method stub
-    Log.i("onProviderEnabled", "onProviderEnabled("+provider+") not yet implemented");
+    Log.i("onProviderEnabled", "onProviderEnabled("+provider+") not yet implemented");    
   }
 
   @Override
