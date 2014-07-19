@@ -27,6 +27,12 @@
 		       android:title="Use Degrees Minutes Seconds"
 		       android:summary="Display coordinates using DMS instead of decimal Degrees"
 		       android:defaultValue="false" />
+        
+        <CheckBoxPreference
+		       android:key="@string/useMiles"
+		       android:title="Use Miles"
+		       android:summary="Display distance using Miles instead of meters"
+		       android:defaultValue="false" />
     </PreferenceCategory>
     <!--  ListPreference
         android:dependency="pref_sync"

@@ -1,6 +1,5 @@
 package com.github.allink28.android_gps_buildexample;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,6 +42,7 @@ public class MainActivity extends Activity implements LocationListener {
   NotificationManager notificationManager;
   private static final int NOTIFICATION_ID = 0;
   
+  // -------------- Activity Lifecycle methods --------------------------------
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,7 +50,6 @@ public class MainActivity extends Activity implements LocationListener {
     settings = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
     init();    
   }
-  
   private void init(){
     startTimeTB = (EditText) this.findViewById(R.id.startTime);
     startLatTB = (EditText) this.findViewById(R.id.startLatitude);
@@ -64,13 +63,18 @@ public class MainActivity extends Activity implements LocationListener {
     start = (ToggleButton) this.findViewById(R.id.start_button);
     
     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER ,
         1000 * Integer.valueOf(settings.getString(getString(R.string.update_time), "5")),//ms to update after 
         Integer.valueOf(settings.getString(getString(R.string.update_dist), "3")),//meters to update after
-        this); 
-    
-    notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        this);
   }
+  
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,7 +98,8 @@ public class MainActivity extends Activity implements LocationListener {
   public void onLocationChanged(Location newLocation) {
     if (start.isChecked() && newLocation != null && currentLocation != null){
       distance += newLocation.distanceTo(currentLocation);
-      summaryTV.setText("Distance traveled: "+Converter.formatDistance(distance));    
+      boolean useMiles = settings.getBoolean(getString(R.string.useMiles), false);
+      summaryTV.setText("Distance traveled: "+Converter.formatDistance(distance, useMiles));    
     }
     currentLocation = newLocation;
     setLocationDisplay(currentLocation, currentLat, currentLong);
@@ -134,13 +139,15 @@ public class MainActivity extends Activity implements LocationListener {
     setLocationDisplay(endLocation, endLatTB, endLongTB);
     setLocationDisplay(startLocation, startLatTB, startLongTB);
  
+    
     StringBuilder sb = new StringBuilder();
-    if (distance != 0){
-      sb.append("Distance traveled: "+Converter.formatDistance(distance)+"\n");    
+    boolean useMiles = settings.getBoolean(getString(R.string.useMiles), false);
+    if (distance != 0){      
+      sb.append("Distance traveled: "+Converter.formatDistance(distance, useMiles)+"\n");    
     }
     sb.append("Time: "+Converter.formatTime(endTime - startTime));
     if (startLocation != null && endLocation != null){
-      sb.append("\nDisplacement: "+Converter.formatDistance(startLocation.distanceTo(endLocation)));
+      sb.append("\nDisplacement: "+Converter.formatDistance(startLocation.distanceTo(endLocation), useMiles));
     }
     summaryTV.setText(sb.toString());    
   }

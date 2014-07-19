@@ -13,20 +13,35 @@ import java.text.DecimalFormat;
  */
 public class Converter {
   private static final DecimalFormat TIME_FORMAT = new DecimalFormat("*0##");
+  private static final DecimalFormat TWO_DECIMAL_PLACES = new DecimalFormat("#.##");
+  private static final DecimalFormat ONE_DECIMAL_PLACE = new DecimalFormat("#.#");
 
   /**
    * @param distance Distance in meters, given by GPS
    * @return Formated distance and unit
    */
-  public static String formatDistance(float distance){
-    if (distance < 1000){ //Less than 1 kilometer
-      return "~"+Math.round(distance)+" m";
+  public static String formatDistance(float distance, boolean useMiles){
+    if (useMiles) {
+      return metersToMiles(distance);
+    } else {
+      if (distance < 1000){ //Less than 1 kilometer
+        return "~"+Math.round(distance)+" m";
+      }
+      if (distance < 100000){ //Less than 100 kilometers 
+        return TWO_DECIMAL_PLACES.format(distance/1000.0) +" km";
+      }
+      return ONE_DECIMAL_PLACE.format(distance/1000)+" km";
     }
-    if (distance < 100000){ //Less than 100 kilometers 
-      return Math.round(distance/100)/10.0+" km";
-    }
-    return Math.round(distance/1000)+" km";    
   }
+  
+  /**
+   * mi = km * 0.62137
+   * @return "x.xx mi" 
+   */
+  private static String metersToMiles(float meters) {    
+    return TWO_DECIMAL_PLACES.format(meters * .62137 / 1000.0) + " mi";
+  }
+  
   
   public static String formatTime(long time){    
     int seconds = (int) time/1000;
@@ -59,7 +74,7 @@ public class Converter {
 //Take your three sets of numbers and put them together, using the symbols for degrees (°), minutes (‘), and seconds (") (i.e. 121°8'6" longitude)
   //examples: 121.135 degrees == 121° 8' 6"
   //          51.477222 degrees == 51° 28' 37.9986"
-  public static String decimalDegreesToDMS(double coordinate){
+  private static String decimalDegreesToDMS(double coordinate){
     String[] dms = String.valueOf(coordinate).split("\\.");
     String decimal = (dms.length == 1 || dms[1].length() == 0)? "0" : dms[1];
     coordinate = Double.valueOf("."+decimal) * 60;
