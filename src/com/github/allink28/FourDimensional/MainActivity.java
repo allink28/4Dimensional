@@ -1,7 +1,9 @@
-package com.github.allink28.android_gps_buildexample;
+package com.github.allink28.FourDimensional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.github.allink28.android_gps_buildexample.R;
 
 import android.location.Location;
 import android.location.LocationListener;

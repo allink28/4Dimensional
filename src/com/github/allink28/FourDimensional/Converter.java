@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.github.allink28.android_gps_buildexample;
+package com.github.allink28.FourDimensional;
 
 import java.text.DecimalFormat;
 
