@@ -64,7 +64,7 @@ public class Converter {
     if (useDMS) {
       return decimalDegreesToDMS(coordinate);
     }
-    return ((int) (coordinate * 100000)) / 100000.0 + "°";
+    return ((int) (coordinate * 100000)) / 100000.0 + "\u00B0";
   }
 
   /**
@@ -73,7 +73,7 @@ public class Converter {
    * The whole number becomes the minutes (8').
    * Take the remaining decimal and multiply by 60. (i.e. .1 * 60 = 6).
    * The resulting number becomes the seconds (6"). Seconds can remain as a decimal.
-   * Take your three sets of numbers and put them together, using the symbols for degrees (°), minutes (°), and seconds (") (i.e. 121°8'6" longitude)
+   * Take your three sets of numbers and put them together, using the symbols for degrees (°), minutes ('), and seconds (") (i.e. 121°8'6" longitude)
    * examples: 121.135 degrees == 121° 8' 6"
    * 51.477222 degrees == 51° 28' 37.9986"
    */
@@ -84,7 +84,7 @@ public class Converter {
     int minutes = (int) coordinate;
     double seconds = (coordinate - minutes) * 60;
 
-    return dms[0] + "° " + minutes + "' " + Math.round(seconds * 10) / 10.0 + "\"";
+    return dms[0] + "\u00B0 " + minutes + "' " + Math.round(seconds * 10) / 10.0 + "\"";
   }
 
 
