@@ -7,22 +7,22 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 public class SettingsActivity extends PreferenceActivity {
- 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
+        super.onCreate(savedInstanceState);
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
 //      addPreferencesFromResource(R.xml.preferences);
     }
-    
+
     public static class PrefsFragment extends PreferenceFragment {
 
-      @Override
-      public void onCreate(Bundle savedInstanceState) {
-          super.onCreate(savedInstanceState);
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
-          // Load the preferences from an XML resource
-          addPreferencesFromResource(R.xml.preferences);
-      }
-  }
+            // Load the preferences from an XML resource
+            addPreferencesFromResource(R.xml.preferences);
+        }
+    }
 }

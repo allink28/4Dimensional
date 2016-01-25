@@ -3,60 +3,58 @@ package com.github.allink28.FourDimensional;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import android.location.LocationManager;
-
 public class Marker implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  private Calendar time;
-  private long latitude;
-  private long longitude;
-  private long altitude;
-  
-  public Marker(boolean markTime) {
-    if (markTime) {
-      time = Calendar.getInstance();
+    private static final long serialVersionUID = 1L;
+    private Calendar time;
+    private long latitude;
+    private long longitude;
+    private long altitude;
+
+    public Marker(boolean markTime) {
+        if (markTime) {
+            time = Calendar.getInstance();
+        }
     }
-  }
-  
-  public Marker(boolean markTime, long lat, long lon, long alt){
-    this(markTime);
-    latitude = lat;
-    longitude = lon;
-    altitude = alt;
-  }
-  
-  public Calendar getTime() {
-    return time;
-  }
 
-  public void setTime(Calendar time) {
-    this.time = time;
-  }
+    public Marker(boolean markTime, long lat, long lon, long alt) {
+        this(markTime);
+        latitude = lat;
+        longitude = lon;
+        altitude = alt;
+    }
 
-  public long getLatitude() {
-    return latitude;
-  }
+    public Calendar getTime() {
+        return time;
+    }
 
-  public void setLatitude(long latitude) {
-    this.latitude = latitude;
-  }
+    public void setTime(Calendar time) {
+        this.time = time;
+    }
 
-  public long getLongitude() {
-    return longitude;
-  }
+    public long getLatitude() {
+        return latitude;
+    }
 
-  public void setLongitude(long longitude) {
-    this.longitude = longitude;
-  }
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
 
-  public long getAltitude() {
-    return altitude;
-  }
+    public long getLongitude() {
+        return longitude;
+    }
 
-  public void setAltitude(long altitude) {
-    this.altitude = altitude;
-  }
-  
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
+    }
+
+    public long getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(long altitude) {
+        this.altitude = altitude;
+    }
+
 
 }
