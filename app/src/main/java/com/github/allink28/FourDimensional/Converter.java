@@ -68,14 +68,14 @@ public class Converter {
     }
 
     /**
-     * The whole units of degrees will remain the same (i.e. in 121.135° longitude, start with 121°).
+     * The whole units of degrees will remain the same (i.e. in 121.135Â° longitude, start with 121Â°).
      * Multiply the decimal by 60 (i.e. .135 * 60 = 8.1).
      * The whole number becomes the minutes (8').
      * Take the remaining decimal and multiply by 60. (i.e. .1 * 60 = 6).
      * The resulting number becomes the seconds (6"). Seconds can remain as a decimal.
-     * Take your three sets of numbers and put them together, using the symbols for degrees (°), minutes ('), and seconds (") (i.e. 121°8'6" longitude)
-     * examples: 121.135 degrees == 121° 8' 6"
-     * 51.477222 degrees == 51° 28' 37.9986"
+     * Take your three sets of numbers and put them together, using the symbols for degrees (Â°), minutes ('), and seconds (") (i.e. 121Â°8'6" longitude)
+     * examples: 121.135 degrees == 121Â° 8' 6"
+     * 51.477222 degrees == 51Â° 28' 37.9986"
      */
     private static String decimalDegreesToDMS(double coordinate) {
         String[] dms = String.valueOf(coordinate).split("\\.");

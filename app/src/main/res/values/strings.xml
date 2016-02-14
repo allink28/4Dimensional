@@ -4,7 +4,8 @@
     <string name="app_name">4 Dimensional</string>
     <string name="action_settings">Settings</string>
     <color name="blue">#FF30c0ff</color><!-- FF30c0ff -->
-    
+
+    <!-- UI Labels -->
     <string name="startLabel">Start: </string>    
     <string name="current">Current:</string>
     <string name="end">End: </string>
@@ -16,10 +17,15 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="altitude">Altitude</string>
-    
+
+    <!-- Settings -->
     <string name="update_time">update_time</string>
     <string name="update_dist">update_dist</string>
     <string name="useDMS">useDMS</string>
     <string name="useMiles">useMiles</string>
+
+    <!-- Messages -->
+    <string name="marked">Position marked.</string>
+    <string name="providerDisabled">%1$s provider disabled</string>
 
 </resources>

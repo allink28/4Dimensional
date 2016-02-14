@@ -21,25 +21,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity implements LocationListener {
-    public static DateFormat DATE_FORMAT = DateFormat.getDateInstance(); // new SimpleDateFormat("h:mm a EEE, MMM d");
-    EditText startTimeTB, endTimeTB;
-    EditText startLatTB, startLongTB;
-    EditText currentLat, currentLong;
-    EditText endLatTB, endLongTB;
-    TextView summaryTV;
-    ToggleButton start;
-    Button mark;
+    public static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(); // new SimpleDateFormat("h:mm a EEE, MMM d");
+    private EditText startTimeTB, endTimeTB;
+    private EditText startLatTB, startLongTB;
+    private EditText currentLat, currentLong;
+    private EditText endLatTB, endLongTB;
+    private TextView summaryTV;
+    private ToggleButton start;
     private long startTime = 0, endTime = 0;
-    float distance;
-    SharedPreferences settings;
-    LocationManager locationManager;
-    Location currentLocation, startLocation, endLocation;
+    private float distance;
+    private SharedPreferences settings;
+    private LocationManager locationManager;
+    private Location currentLocation, startLocation, endLocation;
 
     NotificationManager notificationManager;
     private static final int NOTIFICATION_ID = 0;
@@ -119,16 +118,16 @@ public class MainActivity extends Activity implements LocationListener {
      */
     public void toggleTimer(View v) {
         if (start.isChecked()) {
-            startTimer(v);
+            startTimer();
             endTime = 0;
             distance = 0;
         } else {
-            stopTimer(v);
+            stopTimer();
             startTime = 0;
         }
     }
 
-    private void startTimer(View v) {
+    private void startTimer() {
         startLocation = currentLocation;
         startTime = System.currentTimeMillis();
         Date d = new Date(startTime);
@@ -139,7 +138,7 @@ public class MainActivity extends Activity implements LocationListener {
         setNotification(formattedDate);
     }
 
-    private void stopTimer(View v) {
+    private void stopTimer() {
         endTime = System.currentTimeMillis();
         endTimeTB.setText(DATE_FORMAT.format(new Date(endTime)));
         endLocation = currentLocation;
@@ -185,7 +184,8 @@ public class MainActivity extends Activity implements LocationListener {
      * Save the current coordinate
      */
     public void mark(View v) {
-        //TODO
+        //TODO save coordinate
+        Toast.makeText(MainActivity.this, R.string.marked, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -216,6 +216,7 @@ public class MainActivity extends Activity implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
         // TODO: blank out current location?
+        Toast.makeText(MainActivity.this, String.format(getResources().getString(R.string.providerDisabled), (provider != null) ? provider.toUpperCase() : null ), Toast.LENGTH_LONG).show();
         Log.i("onProviderDisabled", "onProviderDisabled(" + provider + ") not yet implemented");
     }
 
