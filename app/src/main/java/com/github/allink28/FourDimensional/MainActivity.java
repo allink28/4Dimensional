@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements LocationListener {
     private LocationManager locationManager;
     private Location currentLocation, startLocation, endLocation;
 
-    NotificationManager notificationManager;
+    private NotificationManager notificationManager;
     private static final int NOTIFICATION_ID = 0;
 
     // -------------- Activity Lifecycle methods --------------------------------
@@ -172,7 +172,7 @@ public class MainActivity extends Activity implements LocationListener {
                 "4Dimensional - Timer running",
                 "Started at: " + startDate,
                 pendingIntent);
-//    Notification noti = new Notification.Builder(getApplicationContext()) //for api 16
+//    Notification notification = new Notification.Builder(getApplicationContext()) //for api 16
 //          .setContentTitle("Content title")
 //          .setContentText("content text") //setSmallIcon(R.drawable.new_email).setLargeIcon(aBitmap)
 //          .setContentIntent(pendingIntent)
