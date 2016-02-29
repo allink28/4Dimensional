@@ -1,4 +1,4 @@
-package com.github.allink28.FourDimensional;
+package com.github.allink28.fourdimensional.models;
 
 import java.io.Serializable;
 import java.util.Calendar;

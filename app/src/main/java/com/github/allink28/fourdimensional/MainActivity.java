@@ -1,9 +1,10 @@
-package com.github.allink28.FourDimensional;
+package com.github.allink28.fourdimensional;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import com.github.allink28.android_gps_buildexample.R;
+import com.github.allink28.fourdimensional.models.Trip;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,18 +28,18 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity implements LocationListener {
-    public static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(); // new SimpleDateFormat("h:mm a EEE, MMM d");
+    public static final DateFormat DATE_FORMAT = DateFormat.getTimeInstance(); // new SimpleDateFormat("h:mm a EEE, MMM d");
     private EditText startTimeTB, endTimeTB;
     private EditText startLatTB, startLongTB;
     private EditText currentLat, currentLong;
     private EditText endLatTB, endLongTB;
     private TextView summaryTV;
     private ToggleButton start;
-    private long startTime = 0, endTime = 0;
     private float distance;
     private SharedPreferences settings;
     private LocationManager locationManager;
-    private Location currentLocation, startLocation, endLocation;
+    private Location currentLocation;
+    private Trip trip;
 
     private NotificationManager notificationManager;
     private static final int NOTIFICATION_ID = 0;
@@ -119,32 +120,27 @@ public class MainActivity extends Activity implements LocationListener {
     public void toggleTimer(View v) {
         if (start.isChecked()) {
             startTimer();
-            endTime = 0;
-            distance = 0;
         } else {
             stopTimer();
-            startTime = 0;
         }
     }
 
     private void startTimer() {
-        startLocation = currentLocation;
-        startTime = System.currentTimeMillis();
-        Date d = new Date(startTime);
-        String formattedDate = DATE_FORMAT.format(d);
+        trip = new Trip(currentLocation);
+        String formattedDate = DATE_FORMAT.format( new Date(trip.getStartTime()));
         startTimeTB.setText(formattedDate);
-        setLocationDisplay(startLocation, startLatTB, startLongTB);
+        setLocationDisplay(trip.getStartLocation(), startLatTB, startLongTB);
         clearLocationDisplay();
         setNotification(formattedDate);
     }
 
     private void stopTimer() {
-        endTime = System.currentTimeMillis();
-        endTimeTB.setText(DATE_FORMAT.format(new Date(endTime)));
-        endLocation = currentLocation;
+        trip.setEndTime(System.currentTimeMillis());
+        endTimeTB.setText(DATE_FORMAT.format(new Date(trip.getEndTime())));
+        trip.setEndLocation(currentLocation);
         notificationManager.cancel(NOTIFICATION_ID);
-        setLocationDisplay(endLocation, endLatTB, endLongTB);
-        setLocationDisplay(startLocation, startLatTB, startLongTB);
+        setLocationDisplay(trip.getEndLocation(), endLatTB, endLongTB);
+        setLocationDisplay(trip.getStartLocation(), startLatTB, startLongTB);
 
 
         StringBuilder sb = new StringBuilder();
@@ -152,9 +148,10 @@ public class MainActivity extends Activity implements LocationListener {
         if (distance != 0) {
             sb.append("Distance traveled: ").append(Converter.formatDistance(distance, useMiles)).append("\n");
         }
-        sb.append("Time: ").append(Converter.formatTime(endTime - startTime));
-        if (startLocation != null && endLocation != null) {
-            sb.append("\nDisplacement: ").append(Converter.formatDistance(startLocation.distanceTo(endLocation), useMiles));
+        sb.append("Time: ").append(Converter.formatTime(trip.getEndTime() - trip.getStartTime()));
+        if (trip.getStartLocation() != null && trip.getEndLocation() != null) {
+            sb.append("\nDisplacement: ")
+                    .append(Converter.formatDistance(trip.getStartLocation().distanceTo(trip.getEndLocation()), useMiles));
         }
         summaryTV.setText(sb.toString());
     }
