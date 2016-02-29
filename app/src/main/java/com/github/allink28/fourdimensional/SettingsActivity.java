@@ -1,4 +1,4 @@
-package com.github.allink28.FourDimensional;
+package com.github.allink28.fourdimensional;
 
 import com.github.allink28.android_gps_buildexample.R;
 

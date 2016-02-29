@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.github.allink28.FourDimensional;
+package com.github.allink28.fourdimensional;
 
 import java.text.DecimalFormat;
 
